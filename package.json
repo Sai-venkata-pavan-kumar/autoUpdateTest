@@ -1,19 +1,19 @@
 {
   "name": "autoupdatetest",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "test for updates",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "package": "electron-builder"
+    "package": "electron-builder -p always"
   },
   "build": {
     "publish": [
       {
         "provider": "github",
         "owner": "Sai-venkata-pavan-kumar",
-        "repo": ""
+        "repo": "autoUpdateTest"
       }
     ]
   },
@@ -21,10 +21,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^26.2.1"
+    "electron": "^26.2.1",
+    "electron-builder": "^24.6.4"
   },
   "dependencies": {
-    "electron-builder": "^24.6.4",
-    "electron-updater": "^6.1.4"
+    "electron-updater": "^6.1.4",
+    "log": "^6.3.1"
   }
 }

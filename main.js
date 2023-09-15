@@ -1,12 +1,9 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow ,dialog} = require("electron");
 const path = require("path");
 const { autoUpdater } = require("electron-updater");
-const { Console } = require("console");
-let logger = new Console({
-  stdout: path.join(__dirname, "logs.txt"),
-});
+let win;
 function createWindow() {
-  let win = new BrowserWindow();
+  win = new BrowserWindow();
   win.loadFile(path.join(__dirname, "index.html"));
 }
 app.on("ready", () => {
@@ -14,14 +11,34 @@ app.on("ready", () => {
   autoUpdater.checkForUpdatesAndNotify();
 });
 autoUpdater.on("checking-for-update", () => {
-  logger.log("checking for updates");
+    console.log(app.getVersion())
+  console.log("checking for updates");
 });
 autoUpdater.on("update-available", () => {
-  logger.log("update available");
+  dialog.showMessageBox(win,{
+    title:"note",
+    message:"new Version available",
+    buttons:['download']
+  }).then(response=>{
+    if(response==0)
+    {
+        autoUpdater.downloadUpdate();
+    }
+  })
 });
 autoUpdater.on("update-downloaded", () => {
-  logger.log("update downloaded");
+  dialog.showMessageBox(win,{
+    title:'Note',
+    message:"update downloaded"
+  })
 });
 autoUpdater.on("download-progress", (progress) => {
-  logger.log(progress);
+    dialog.showMessageBox(win,{
+        title:"Note",
+        message:"update is downloading",
+        buttons:['ok']
+    }).then(response=>{
+        if(response==0){
+        }
+    })
 });
